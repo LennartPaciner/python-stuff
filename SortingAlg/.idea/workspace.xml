@@ -43,7 +43,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.CountingSort">
+  <component name="RunManager" selected="Python.RadixSort">
     <configuration name="CountingSort" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="SortingAlg" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -151,8 +151,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.CountingSort" />
         <item itemvalue="Python.RadixSort" />
+        <item itemvalue="Python.CountingSort" />
         <item itemvalue="Python.Exercise1" />
         <item itemvalue="Python.InsertionSort" />
         <item itemvalue="Python.MergeSort" />

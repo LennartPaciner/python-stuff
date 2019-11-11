@@ -48,4 +48,5 @@ if __name__ == "__main__":
     print(arr)
     #obj.radix_sort(arr)
     obj.radix_sort(arr)
+    print("Ergebnis:", end=" ")
     print(arr)
