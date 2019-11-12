@@ -39,14 +39,16 @@ class Radixsort:
         while m // exp > 0:
             self.sortExponent(a, 10, exp)
             exp *= 10
-            #print(a)
+
+
+
 
 if __name__ == "__main__":
     obj = Radixsort()
     arr = [88, 3, 9, 12, 3, 2, 6, 2, 15]
-    #arr.insert(0,0)
     print(arr)
-    #obj.radix_sort(arr)
+
+
     obj.radix_sort(arr)
     print("Ergebnis:", end=" ")
     print(arr)

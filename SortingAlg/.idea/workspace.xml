@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1423436-8dd4-4af8-82ad-cd507c639009" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CountingSort.py" beforeDir="false" afterPath="$PROJECT_DIR$/CountingSort.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RadixSort.py" beforeDir="false" afterPath="$PROJECT_DIR$/RadixSort.py" afterDir="false" />
     </list>
