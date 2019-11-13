@@ -7,7 +7,7 @@ aufruf = True
 
 
 
-#Funktioniert wenn k = 2 ist (zumindest für mein bsp array)
+#Funktioniert nicht ganz
 def sortListwithK(a, k):
     global count1
     global b
