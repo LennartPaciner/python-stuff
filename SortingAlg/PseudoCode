@@ -1,0 +1,18 @@
+funktion(a, k, index):
+    #abbruchbedingung für funktion
+    if index > len(a) - k:
+        return a
+
+    #bilde tupel für formel aus aufgabe
+    paar1 = a[index : index + k]
+    paar2 = a[index+1 : index+1+k]
+
+    #überprüfe formel
+    if summe(paar1) <= summe(paar2):
+        return funktion(a, k , index+1)
+    else:
+        #da nur diese elemente verschieden
+        swap(paar1[0], paar2[-1] in a)
+
+    #rekursiver aufruf
+    return funktion(a, k , index+1)
