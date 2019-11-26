@@ -1,39 +1,56 @@
-import random
+import random as rd
+import math
 
-def hashPrimary(k):
+p = 2147483659
+
+
+def sec_hash(a,b,k):
+    global p
+    m = 2**20
+    sec_hash = ((a * k + b) % p) % m
+    return sec_hash
+
+
+def primary_hash(k):
+    global p
     a = 1
-    b = 0
-    tabelle = {}
-    index = ((a * k + b) % 2147483659) % 1048576
+    b = 1
+    m = 2**20
+    p_hash = ((a * k + b) % p) % m
+    return p_hash
 
 
+def perfect_hashing(schluessel):
+    global p
+    new_dict = {new_list: [] for new_list in range(0, 2**20)}
 
-def hashSecondary(index):
-    return index
-
-def statPerfectHash():
-    a = []
     for i in range(0, 2**20):
-        a.append(random.randint(0, 2**31 - 1))
-    for i in range(0, 2**20):
-        hashPrimary(a[i])
-    #print(index)
+        result = primary_hash(schluessel[i])
+        if schluessel[i] in new_dict.values() or new_dict[result] != []:
+            frei = False
+            while frei == False:
+                a = rd.randint(0, p)
+                b = rd.randint(0, p)
+                result = sec_hash(a, b, schluessel[i])
+
+                if new_dict[result] == []:
+
+                    new_dict[result] = schluessel[i]
+                    frei = True
+        else:
+            new_dict[result] = schluessel[i]
+
+    return new_dict
+
 
 
 
 if __name__ == "__main__":
     #print(2**20)
     #2^20 = 1048576 = unser anzahl n und unser m
-    #statPerfectHash()
-    tabelle = {}
-    for i in range(10):
-        if [4] in tabelle.values():
-            print(i)
-            wert = tabelle[str(i)].
-            tabelle[str(i)] = [wert, 99]
-            #tabelle[str(4)].append(4)
-        tabelle[str(i)] = [i % 5]
-    print(tabelle)
+
+    liste = [rd.randint(0, 2**10)] * 2**20
+    print(perfect_hashing(liste))
 
 
 
