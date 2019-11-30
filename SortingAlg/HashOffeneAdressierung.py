@@ -51,18 +51,16 @@ def quadraticProbing(schluessel, m):
 
 def doubleHashing(schluessel, m):
     hashTabelle = {}
-    c1 = 1
-    c2 = 3
     for i in range(1, m + 1):
         hashTabelle[i] = 0
     for k in range(len(schluessel)):
         i = 1
-        result = ((schluessel[k] + i * c1 + (i ** 2) * c2) % m) + 1
+        result = ((schluessel[k] + i * (1 + (schluessel[k] % (m-1)))) % m) + 1
         if hashTabelle[result] != 0:
             frei = False
             while frei == False:
                 i += 1
-                result = ((schluessel[k] + i * c1 + (i ** 2) * c2) % m) + 1
+                result = ((schluessel[k] + i * (1+ (schluessel[k] % (m-1)))) % m) + 1
                 if hashTabelle[result] == 0:
                     hashTabelle[result] = schluessel[k]
                     frei = True
@@ -74,5 +72,7 @@ def doubleHashing(schluessel, m):
 
 if __name__ == "__main__":
     testliste = [10, 22, 31, 4, 15, 28, 17, 88, 59]
+
     print(linearProbing(testliste, 11))
     print(quadraticProbing(testliste, 11))
+    print(doubleHashing(testliste, 11))
