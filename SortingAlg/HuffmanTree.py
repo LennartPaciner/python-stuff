@@ -4,12 +4,7 @@ count = ""
 def huffman(root, s):
     global count
 
-    if root[2] is None and root[3] is None and root[1] in string.ascii_letters:
-        print(root[1], end="")
-        print(":" + s)
-        count = count + s
-        return
-    elif root[2] is None and root[3] is None and root[1] in string.digits:
+    if root[2] is None and root[3] is None and root[1] in string.printable:
         print(root[1], end="")
         print(":" + s)
         count = count + s
@@ -22,6 +17,7 @@ def huffman(root, s):
 
 if __name__ == "__main__":
     A = "Bananensaft"
+    print("Eingabestring = " + A)
     a = list(set(A))
     arr = [0] * len(a)  # besitzt häufigkeiten der unique chars aus liste a die am anfang erzeugt wird aus eingabestring
     for i in range(len(a)):
@@ -46,5 +42,6 @@ if __name__ == "__main__":
     huffman(root, "")
     #Länge der Kodierung
     print("Länge der Kodierung = " + str(len(count)))
+    print(string.printable)
 
 
