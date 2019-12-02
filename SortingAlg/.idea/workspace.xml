@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1423436-8dd4-4af8-82ad-cd507c639009" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/HuffmanTreeFile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HuffmanTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/HuffmanTree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PseudoCode" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HuffmanTreeFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/HuffmanTreeFile.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +44,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.HuffmanTreeFile">
+  <component name="RunManager" selected="Python.HuffmanTree">
     <configuration name="HashOffeneAdressierung" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="SortingAlg" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -153,8 +152,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.HuffmanTreeFile" />
         <item itemvalue="Python.HuffmanTree" />
+        <item itemvalue="Python.HuffmanTreeFile" />
         <item itemvalue="Python.test2" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.HashOffeneAdressierung" />
