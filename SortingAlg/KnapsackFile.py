@@ -9,7 +9,6 @@ def rucksack(gewichte, profite, maximal):
                 opt[i][j] = max(profite[i-1] + opt[i-1][j - gewichte[i-1]], opt[i-1][j])
             else:
                 opt[i][j] = opt[i-1][j]
-            print(opt)
 
     return opt[len(profite)][maximal]
 
@@ -32,9 +31,9 @@ if __name__ == "__main__":
         profite.append(int(A[i]))
 
     print("Ausgabe:")
-    #for i in range(len(schranke)):
-        #print(rucksack(gewichte, profite, schranke[i]), end=" ")
-    print(rucksack(gewichte, profite, schranke[2]))
+    for i in range(len(schranke)):
+        print(rucksack(gewichte, profite, schranke[i]), end=" ")
+    #print(rucksack(gewichte, profite, schranke[2]))
 
 
 
