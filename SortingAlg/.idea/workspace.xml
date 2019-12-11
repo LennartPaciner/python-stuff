@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f1423436-8dd4-4af8-82ad-cd507c639009" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphLinkedList.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphLinkedList.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +42,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.GraphLinkedList">
+  <component name="RunManager" selected="Python.KnapsackFile">
     <configuration name="GraphLinkedList" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="SortingAlg" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -151,11 +150,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.GraphLinkedList" />
         <item itemvalue="Python.KnapsackFile" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.HuffmanTreeFile" />
         <item itemvalue="Python.HuffmanTree" />
+        <item itemvalue="Python.HuffmanTreeFile" />
+        <item itemvalue="Python.GraphLinkedList" />
+        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
