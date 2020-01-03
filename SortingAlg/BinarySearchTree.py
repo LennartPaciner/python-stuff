@@ -103,8 +103,9 @@ if __name__ == "__main__":
     n = 10**k
 
     """
-    zu 1d) falls das hier stimmt mit dem befüllen: mittelwert wächst generell, aber sehr langsam an. Müsste wohl lange durchlaufen
-    oder effizienter das hier ausgeben um deutliche sprünge zu sehen?
+    zu 1d) falls das hier stimmt mit dem befüllen: mittelwert wächst schnell bis zu einem wert und ab da dann nur noch langsam und geht auch mal zurück
+    da elemente/zahlen an andere stellen verschoben werden können und so die tiefe auch sinken kann mit der zeit. Langfristig wächst der wert langsam
+    
     1e) 2 beispiele, effizienz zusammen dann analysieren:
     1: Wörterbuch-Datenstruktur, da
     -sie dynamisch sind, um die Probleme, die sich aus der starren Größe und der Speicherverwaltung von Feldern ergeben, zu überwinden.
@@ -112,14 +113,16 @@ if __name__ == "__main__":
     2: 
     """
     for i in range(1, n):
+        tiefe = 0
         for j in range(10):
             zahlen = random.sample(range(1, n + 1), n)
             root = baum2.insert(root, zahlen[0])
             for x in range(1, i):
                 baum2.insert(root, zahlen[x])
-            tiefe = baum2.getTiefe(root)
-            mittelwert = tiefe / n
-            print(mittelwert)
+            tiefe += baum2.getTiefe(root)
+        mittelwert = tiefe / 10
+        print(mittelwert)
+
 
 
 
