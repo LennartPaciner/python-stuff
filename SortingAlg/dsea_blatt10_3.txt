@@ -1,0 +1,18 @@
+3a)
+knoten besitzen zusätzlich anzahl der knoten die einen geringeren wert als sie haben
+sonderfälle wurzel..(kann man sich evtl eine ganze hälfte sparen wenn man hier abfragt aber vllt egal)
+rufe baum rekursiv für linkes und rechtes kind auf und finde a und b
+finde knoten a und lese wert für knoten mit geringerem wert aus in O(log n)
+finde knoten b und lese wert für knoten mit geringerem wert aus in O(log n)
+subtrahiere den gelesenen wert aus knoten b mit dem aus knoten a und man bekommt die anzahl der knoten die zwischen beiden liegen
+
+Laufzeit = log n + log n = O(log n)
+
+
+3b)
+sonderfälle wurzel.. (null, gleich, echt kleiner / größer)
+wenn knoten >= a und knoten <= b: füge knoten der menge hinzu und rufe linken und rechten teilbaum auf
+wenn knoten > b: rufe nur für linken teilbaum auf
+wenn knoten < a: rufe nur für rechten teilbaum auf
+
+Laufzeit = log n + log n für auffinden von a und b siehe a) + anzahl hinzugefügter knoten zu einer liste oder so, also O(log n + x)
