@@ -1,3 +1,4 @@
+import urllib, re
 import discord
 from discord.ext import commands
 from discord.ext.commands import bot
@@ -9,11 +10,14 @@ import random
 import giphy_client
 from giphy_client.rest import ApiException
 from main import token
+from urllib.parse import urlencode
+from urllib.request import urlopen
+from requests.utils import requote_uri
 
 
 queue = []
 client = commands.Bot(command_prefix="!")
-next = False
+
 
 
 @client.event
@@ -59,10 +63,26 @@ async def disconnect(ctx):
     voice = get(client.voice_clients, guild=ctx.guild)
     await voice.disconnect()
 
-
 @client.command()
-async def add(ctx, name):
+async def add(ctx, *, name):
     global queue
+
+    if name[:3] != "http":
+        query_string = urllib.parse.urlencode({'search_query': name})
+
+        html_content = urllib.request.urlopen('http://www.youtube.com/results?' + query_string)
+
+        search_content= html_content.read().decode()
+
+        search_results = re.findall(r'/watch\?v=(.{11})', search_content)
+
+        video = random.choice(search_results)
+
+        name = ('https://www.youtube.com/watch?v=' + video)
+        print(name)
+        print(type(name))
+
+    print(type(name))
     queue.append(name)
     print(queue)
 
@@ -75,6 +95,7 @@ async def stop(ctx):
 
 @client.command()
 async def pause(ctx):
+    # TODO dass er nicht uas der while schleife geht beim spielen obowhl er grad nicht spielt - vllt mit boolean abfrage pause = True
     voice = get(client.voice_clients, guild=ctx.guild)
     try:
         await voice.pause()
@@ -110,7 +131,11 @@ async def play(ctx):
                 os.remove("song.webm")
                 with youtube_dl.YoutubeDL(YTDL_OPTIONS) as ydl:
                     print(queue[0])
-                    ydl.download([queue[0]])
+                    try:
+                        ydl.download([queue[0]])
+                    except youtube_dl.DownloadError as e:
+                        await asyncio.sleep(3)
+                        ydl.download([queue[0]])
                     for file in os.listdir("./"):
                         if file.endswith(".webm"):
                             os.rename(file, "song.webm")
@@ -135,7 +160,7 @@ async def on_message(message):
     if message.content == "!patrick":
         await message.channel.send("Wann wieder in Mainz PepeHands.")
     if message.content == "!marco":
-        await message.channel.send("Grundschulstudium scheint das schwerste Studium von allen zu sein.")
+        await message.channel.send("Wann Studio offen.")
     if message.content == "!lennart":
         await message.channel.send("Der Ersteller von mir. Ziemlich lidl.")
     await client.process_commands(message)
