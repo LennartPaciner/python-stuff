@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.ext.commands import bot
 from discord.utils import get
 import youtube_dl
 import os
@@ -7,6 +8,7 @@ import asyncio
 import random
 import giphy_client
 from giphy_client.rest import ApiException
+from main import token
 
 
 queue = []
@@ -125,10 +127,22 @@ async def play(ctx):
 @client.event
 async def on_message(message):
     if message.content == "!waldmann":
-        await message.channel.send("ein jude")
+        await message.channel.send("Sollte mir mal eine Fanta kaufen.")
+    if message.content == "!chris":
+        await message.channel.send("Sollte mal Statistik schreiben.")
+    if message.content == "!maurice":
+        await message.channel.send("Wann bekommen wir unsere erste Million für unsere App?")
+    if message.content == "!patrick":
+        await message.channel.send("Wann wieder in Mainz PepeHands.")
+    if message.content == "!marco":
+        await message.channel.send("Grundschulstudium scheint das schwerste Studium von allen zu sein.")
+    if message.content == "!lennart":
+        await message.channel.send("Der Ersteller von mir. Ziemlich lidl.")
+    await client.process_commands(message)
 
 
 
 
+#token aus main sonst schreit discord rum - auskommentieren für run mit eigenem token oder so
+client.run(token)
 
-client.run('ODQ2MTExNTUwNDg1MTY4MTkx.YKqwyQ.27PRFBImGJRRCCRq72y2F1SecAo')
