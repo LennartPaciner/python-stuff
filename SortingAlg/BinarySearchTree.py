@@ -95,23 +95,15 @@ if __name__ == "__main__":
     print("Tiefe vom Baum ist: " ,end="")
     print(baum.getTiefe(wurzel))
     print("----------------")
-    print("Ab hier 1d)")
+    print("Ab hier für 1d) das print ganz unten auskommentieren. Aufgabe nicht komplett verstanden.")
+    print("Analyse: Wert steigt schnell an bis zu einem bestimmten Wert und geht dann auch wieder zurück, da mit neuen Werten der Baum sich rebalancieren kann. Langfristig wächst der Wert")
+    print("")
     root = None
     baum2 = Knoten()
     mittelwert = 0
     k = random.randrange(2, 7)
     n = 10**k
 
-    """
-    zu 1d) falls das hier stimmt mit dem befüllen: mittelwert wächst schnell bis zu einem wert und ab da dann nur noch langsam und geht auch mal zurück
-    da elemente/zahlen an andere stellen verschoben werden können und so die tiefe auch sinken kann mit der zeit. Langfristig wächst der wert langsam
-    
-    1e) 2 beispiele, effizienz zusammen dann analysieren:
-    1: Wörterbuch-Datenstruktur, da
-    -sie dynamisch sind, um die Probleme, die sich aus der starren Größe und der Speicherverwaltung von Feldern ergeben, zu überwinden.
-    -sie binäres Suchen ermöglichen, um die Wörterbuchoperation Suchen effizient ausführen zu können.
-    2: 
-    """
     for i in range(1, n):
         tiefe = 0
         for j in range(10):
@@ -121,7 +113,8 @@ if __name__ == "__main__":
                 baum2.insert(root, zahlen[x])
             tiefe += baum2.getTiefe(root)
         mittelwert = tiefe / 10
-        print(mittelwert)
+        #hier entkommentieren für 1d
+        #print(mittelwert)
 
 
 
