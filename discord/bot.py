@@ -12,17 +12,20 @@ from main import token
 from urllib.parse import urlencode
 from urllib.request import urlopen
 from discord import Spotify
+from datetime import datetime
 
 #Benötigte Sachen initialisieren
 queue = []
 anhalten = False
 intents = discord.Intents().all()
 client = commands.Bot(command_prefix="!", intents=intents)
+client.remove_command('help')
 
 
 @client.event
 async def on_ready():
     print("Bot wurde gestartet.")
+
 
 YTDL_OPTIONS = {
     'format': '250',
@@ -37,13 +40,13 @@ YTDL_OPTIONS = {
     'source_address': '0.0.0.0',
 }
 
-#TODO ändern/testen in dass er checkt ob ich noch spotify höre oder nicht bevor er in die schleife geht
+
 #TODO voreingestellte playlists drin haben z.b. bei !playlist rock, !playlist elektro und co ?
-#TODO anleitung embedded? schreiben für befehle und features
 #TODO spiele ala tic tac toe oder polls?
 #TODO hardcoded sound snippets z.b. uganda stuff oder forsen bei den commands? (soundboards mäßig)
 #TODO yt video zsm gucken über bot in discord - die werden ja embedded angezeigt wenn man link postet? zb. bot sagt link in chat immer der grad spielt
 #TODO Autoplay - nach genre? dieser yt befehl mit info die man bekommt
+#TODO comments zu allen funktionen und wichtigen parts noch adden für zukunft
 
 
 @client.command()
@@ -66,15 +69,14 @@ async def spot(ctx, user: discord.Member=None):
 
                     html_content = urllib.request.urlopen('http://www.youtube.com/results?' + query_string)
 
-                    search_content= html_content.read().decode()
+                    search_content = html_content.read().decode()
 
                     search_results = re.findall(r'/watch\?v=(.{11})', search_content)
 
                     video = (search_results[0])
-                    #print(video)
 
                     name = ('https://www.youtube.com/watch?v=' + video)
-                    await ctx.channel.send("Spielt gerade " + name)
+
                     queue.append(name)
                     print(queue)
                     try:
@@ -85,6 +87,50 @@ async def spot(ctx, user: discord.Member=None):
                 else:
                     await asyncio.sleep(5)
                     continue
+
+        #Damit Bot aus while-Schleife geht falls User Spotify bei sich pausiert. Bot hört auf aktuellen Song zu spielen.
+        if len(user.activities) == 0:
+            try:
+                await voice.stop()
+                await asyncio.sleep(1)
+            except TypeError as e:
+                print(e)
+            break
+
+@client.command()
+async def help(ctx):
+    embed = discord.Embed(
+        title = "Mögliche Befehle",
+        description = "Alle möglichen Befehle, die der Bot so im Moment kann.",
+        colour = discord.Colour.purple(),
+        timestamp=datetime.now()
+    )
+    embed.set_thumbnail(url="https://i.redd.it/ptim9jgegrk51.png")
+    embed.add_field(name="Bedienung", value="Mit dem Join Befehl den Bot 'nem Voice Channel joinen lassen. Dort dann entweder per YT-Commands oder Spotify"
+                                            " Command mindestens ein Lied hinzufügen. Dann mittels Play Command Musik abspielen. Ab da kann man dann auch"
+                                            " während der Bot spielt weitere Musik hinzufügen oder von Spotify zu YT und zurück wechseln. Bot"
+                                            " zeigt aktuell spielenden Song im Textchannel mit Link zum YT-Video an.", inline=False)
+    embed.add_field(name="!join 'VC-NAME'", value="Lässt den Bot einem VC-Channel beitreten. Wird benötigt um Musik abzuspielen und initialisiert die Queue.")
+    embed.add_field(name="!play", value="Lässt den Bot Musik abspielen, sofern mindestens ein Lied hinzugefügt wurde (oder mit Spotify verbunden).")
+    embed.add_field(name="!spot", value="Verbindet Spotify mit Discord. Spielt nur Musik falls Musik in Spotify spielt. Aktuallisiert automatisch"
+                                        " den zu spielenden Song. Unterstützt dadurch indirekt Spotify Playlists. Workaround über YT, aber hohe Trefferrate."
+                                        " Zieht sich Titel und Künstler von Spotify und nimmt Top-Result von YT.")
+    embed.add_field(name="!playlist 'YT-URL'", value="Spielt komplette YT-Playlist ab. Url reicht von irgend einem der Videos aus der Playlist."
+                                                     " Spielt nicht in Reihenfolge der Playlist ab, aber spielt jedes Lied nur einmal bis alle durch sind.")
+    embed.add_field(name="!add 'YT-URL/String'", value="Füge einzelne Lieder zur Queue hinzu. Entweder ein gezieltes per URL oder auch nur per normaler"
+                                                       " Eingabe z.B. 'linkin park numb'. Bot zieht sich dann das Top-Result.")
+    embed.add_field(name="!rand 'String'", value="Similar zum add-Befehl, aber Bot zieht sich ein zufälliges Video, das zur Suchanfrage passt, statt dem"
+                                                   " Top-Result.")
+    embed.add_field(name="!skip", value="Skipped aktuell spielendes Lied für YT Sachen. Bei Spotify ist skip einfach in Spotify selber skippen.")
+    embed.add_field(name="!stop", value="Stoppt Bot und lässt ihn den Voice Channel verlassen.")
+    embed.add_field(name="!disconnect", value="Similar zu Stop. Verwendbar wenn Bot keine Musik spielt, aber den Channel verlassen soll.")
+    embed.add_field(name="!pause", value="Pausiert aktuellen Song.")
+    embed.add_field(name="!resume", value="Setzt pausierten Song wieder fort.")
+    embed.add_field(name="!gif 'String'", value="Gibt zufälligen passenden Gif zur Suchanfrage im Textchannel zurück. Leer = Bojack Gif")
+    embed.set_footer(text="Aktuelle Zeit: ")
+
+    await ctx.channel.send(embed=embed)
+
 
 @client.command()
 async def gif(ctx, *, q="Bojack"):
@@ -126,9 +172,28 @@ async def add(ctx, *, name):
 
         search_results = re.findall(r'/watch\?v=(.{11})', search_content)
 
-        video = random.choice(search_results)
+        video = search_results[0]
 
         name = ('https://www.youtube.com/watch?v=' + video)
+
+    queue.append(name)
+    print(queue)
+
+@client.command()
+async def rand(ctx, *, name):
+    global queue
+
+    query_string = urllib.parse.urlencode({'search_query': name})
+
+    html_content = urllib.request.urlopen('http://www.youtube.com/results?' + query_string)
+
+    search_content= html_content.read().decode()
+
+    search_results = re.findall(r'/watch\?v=(.{11})', search_content)
+
+    video = random.choice(search_results)
+
+    name = ('https://www.youtube.com/watch?v=' + video)
 
     queue.append(name)
     print(queue)
@@ -190,12 +255,10 @@ async def playlist(ctx, name):
 async def play(ctx):
     global queue
     global anhalten
-    global skippen
     print(queue)
     voice = get(client.voice_clients, guild=ctx.guild)
     while len(queue) > 0:
         song = os.path.isfile("song.webm")
-        print("will neues lied haben")
         try:
             if song:
                 os.remove("song.webm")
@@ -203,10 +266,13 @@ async def play(ctx):
                     print(queue[0])
                     try:
                         ydl.download([queue[0]])
+                        await ctx.channel.send("Spielt gerade " + queue[0])
                     except youtube_dl.utils.DownloadError as e:
                         await asyncio.sleep(3)
                         print(e)
+                        #Um <urlopen error [Errno 11001] getaddrinfo failed> evtl. zu entgehen (DNS Error) nochmal Download versuchen.
                         ydl.download([queue[0]])
+                        await ctx.channel.send("Spielt gerade " + queue[0])
                     for file in os.listdir("./"):
                         if file.endswith(".webm"):
                             os.rename(file, "song.webm")
